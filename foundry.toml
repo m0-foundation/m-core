@@ -1,0 +1,34 @@
+[profile.default]
+src = "src"
+test = "test"
+script = "script"
+out = "out"
+libs = ["lib"]
+cache = true
+cache_path = "cache"
+broadcast = "broadcast"
+gas_reports = ["MToken", "MinterGateway"]
+gas_reports_ignore = []
+solc-version = "0.8.23"
+evm_version = "shanghai"
+optimizer = true
+optimizer_runs = 999999
+verbosity = 3
+ignored_error_codes = []
+block_number = 19_519_600
+block_timestamp = 1_711_468_000
+build_info = true
+sizes = true
+
+[profile.default.fuzz]
+runs = 5000
+
+[profile.default.invariant]
+runs = 512
+depth = 25
+fail_on_revert = true
+
+[rpc_endpoints]
+localhost = "http://127.0.0.1:8545"
+sepolia = "https://rpc.sepolia.org"
+mainnet = "https://eth.meowrpc.com"
