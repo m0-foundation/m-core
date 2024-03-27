@@ -8,10 +8,10 @@ import { Logger } from "./Logger.sol";
 
 import { DeployBase } from "./DeployBase.sol";
 
-contract DeployDryRun is Script, DeployBase {
-    uint256 internal constant _STANDARD_PROPOSAL_FEE = 0.01 ether;
+contract DeployProduction is Script, DeployBase {
+    uint256 internal constant _STANDARD_PROPOSAL_FEE = 0.5 ether;
 
-    address internal constant _WETH = 0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9; // NOTE: Populate with WETH.
+    address internal constant _WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2; // Mainnet WETH
 
     // NOTE: Populate these arrays with Power ad Zero starting accounts respectively.
     address[][2] _initialAccounts = [
@@ -20,7 +20,7 @@ contract DeployDryRun is Script, DeployBase {
     ];
 
     // NOTE: Populate these arrays with Power ad Zero starting balances respectively.
-    uint256[][2] _initialBalances = [[uint256(1)], [uint256(1_000_000e6)]];
+    uint256[][2] _initialBalances = [[uint256(10_000)], [uint256(1_000_000_000e6)]];
 
     function run() external {
         (address deployer_, ) = deriveRememberKey(vm.envString("MNEMONIC"), 0);

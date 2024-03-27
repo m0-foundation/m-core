@@ -11,6 +11,8 @@ import { IMinterGateway } from "../lib/protocol/src/interfaces/IMinterGateway.so
 import { DeployBase } from "../script/DeployBase.sol";
 
 contract Deploy is Test, DeployBase {
+    address internal constant _WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
+
     address internal _alice = makeAddr("alice");
     address internal _bob = makeAddr("bob");
     address internal _carol = makeAddr("carol");
@@ -23,8 +25,6 @@ contract Deploy is Test, DeployBase {
     function test_deploy() external {
         uint256 standardProposalFee_ = 1e18; // 1 WETH
 
-        address[] memory allowedCashTokens_ = new address[](0);
-
         address expectedTTGRegistrar = getExpectedRegistrar(address(this), 1);
         address expectedZeroGovernor = getExpectedZeroGovernor(address(this), 1);
         address expectedMinterGateway = getExpectedMinterGateway(address(this), 1);
@@ -35,7 +35,7 @@ contract Deploy is Test, DeployBase {
             address minterGateway_,
             address minterRateModel_,
             address earnerRateModel_
-        ) = deployCore(address(this), 1, _initialAccounts, _initialBalances, standardProposalFee_, allowedCashTokens_);
+        ) = deployCore(address(this), 1, _initialAccounts, _initialBalances, standardProposalFee_, _WETH);
 
         assertEq(ttgRegistrar_, expectedTTGRegistrar);
         assertEq(IRegistrar(ttgRegistrar_).zeroGovernor(), expectedZeroGovernor);

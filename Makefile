@@ -13,7 +13,7 @@ coverage-summary:
 
 # Deployment helpers
 deploy-dry-run:
-	./set-epochs.sh -p dry-run && forge script script/Deploy.s.sol --skip src --skip test --rpc-url sepolia --broadcast --slow -vvv
+	./set-epochs.sh -p dry-run && forge script script/DeployDryRun.s.sol --skip src --skip test --rpc-url sepolia --broadcast --slow -vvv
 
 deploy-staging:
 	./set-epochs.sh -p staging && forge script script/Deploy.s.sol --skip src --skip test --rpc-url sepolia --broadcast --slow -vvv
@@ -22,7 +22,7 @@ deploy-dev:
 	./set-epochs.sh -p dev && forge script script/Deploy.s.sol --skip src --skip test --rpc-url sepolia --broadcast --slow -vvv
 
 deploy-production:
-	./set-epochs.sh -p production && forge script script/Deploy.s.sol --skip src --skip test --rpc-url mainnet --broadcast --slow -vvv
+	./set-epochs.sh -p production && forge script script/DeployProduction.s.sol --skip src --skip test --rpc-url mainnet --broadcast --slow -vvv
 
 deploy-local:
 	./set-epochs.sh -p dev && forge script script/Deploy.s.sol --skip src --skip test --rpc-url localhost --broadcast --slow -vvv
