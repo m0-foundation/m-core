@@ -13,18 +13,12 @@ contract DeployBase is ProtocolDeployBase, TTGDeployBase {
         uint256[][2] memory initialBalances_,
         uint256 standardProposalFee_,
         address weth_
-    )
-        public
-        returns (address ttgRegistrar_, address minterGateway_, address minterRateModel_, address earnerRateModel_)
-    {
+    ) public returns (address registrar_, address minterGateway_, address minterRateModel_, address earnerRateModel_) {
         address[] memory allowedCashTokens_ = new address[](2);
         allowedCashTokens_[0] = weth_;
+        allowedCashTokens_[1] = getExpectedMToken(deployer_, deployerNonce_);
 
-        uint256 deployerNonceAfterTTGDeployment_ = getDeployerNonceAfterTTGDeployment(deployerNonce_);
-
-        allowedCashTokens_[1] = getExpectedMToken(deployer_, deployerNonceAfterTTGDeployment_);
-
-        ttgRegistrar_ = deploy(
+        registrar_ = deploy(
             deployer_,
             deployerNonce_,
             initialAccounts_,
@@ -35,8 +29,8 @@ contract DeployBase is ProtocolDeployBase, TTGDeployBase {
 
         (minterGateway_, minterRateModel_, earnerRateModel_) = deploy(
             deployer_,
-            deployerNonceAfterTTGDeployment_,
-            ttgRegistrar_
+            getDeployerNonceAfterTTGDeployment(deployerNonce_),
+            registrar_
         );
     }
 

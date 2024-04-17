@@ -178,28 +178,23 @@ contract DeployDryRun is Script, DeployBase {
     ];
 
     function run() external {
-        (address deployer_, ) = deriveRememberKey(vm.envString("MNEMONIC"), 0);
+        address deployer_ = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
 
         console2.log("Deployer:", deployer_);
 
         vm.startBroadcast(deployer_);
 
-        (
-            address ttgRegistrar_,
-            address minterGateway_,
-            address minterRateModel_,
-            address earnerRateModel_
-        ) = deployCore(
-                deployer_,
-                vm.getNonce(deployer_),
-                _initialAccounts,
-                _initialBalances,
-                _STANDARD_PROPOSAL_FEE,
-                _WETH
-            );
+        (address registrar_, address minterGateway_, address minterRateModel_, address earnerRateModel_) = deployCore(
+            deployer_,
+            vm.getNonce(deployer_),
+            _initialAccounts,
+            _initialBalances,
+            _STANDARD_PROPOSAL_FEE,
+            _WETH
+        );
 
         vm.stopBroadcast();
 
-        Logger.logContracts(ttgRegistrar_, minterGateway_, minterRateModel_, earnerRateModel_);
+        Logger.logContracts(registrar_, minterGateway_, minterRateModel_, earnerRateModel_);
     }
 }
