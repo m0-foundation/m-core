@@ -86,6 +86,14 @@ contract Deploy is Test, DeployBase {
         assertEq(IPowerToken(powerToken_).bootstrapToken(), getExpectedBootstrapToken(address(this), 1));
         assertEq(IPowerToken(powerToken_).standardGovernor(), standardGovernor_);
         assertEq(IPowerToken(powerToken_).vault(), vault_);
+        assertEq(IPowerToken(powerToken_).cashToken(), _WETH);
+
+        for (uint256 index_; index_ < _initialAccounts[0].length; ++index_) {
+            assertEq(
+                IPowerToken(powerToken_).balanceOf(_initialAccounts[0][index_]),
+                ((_initialBalances[0][index_] * IPowerToken(powerToken_).INITIAL_SUPPLY()) / 30_000)
+            );
+        }
 
         // Power Token Deployer assertions
         assertEq(IPowerTokenDeployer(powerTokenDeployer_).vault(), vault_);
@@ -116,6 +124,10 @@ contract Deploy is Test, DeployBase {
 
         // Zero Token assertions
         assertEq(IZeroToken(zeroToken_).standardGovernorDeployer(), standardGovernorDeployer_);
+
+        for (uint256 index_; index_ < _initialAccounts[1].length; ++index_) {
+            assertEq(IZeroToken(zeroToken_).balanceOf(_initialAccounts[1][index_]), _initialBalances[1][index_]);
+        }
 
         // Minter Gateway assertions
         assertEq(minterGateway_, getExpectedMinterGateway(address(this), 1));
