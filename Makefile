@@ -16,16 +16,16 @@ deploy-dry-run:
 	./set-epochs.sh -p dry-run && forge script script/DeployDryRun.s.sol --skip src --skip test --rpc-url sepolia --broadcast --slow --verify -vvv
 
 deploy-staging:
-	./set-epochs.sh -p staging && forge script script/Deploy.s.sol --skip src --skip test --rpc-url sepolia --broadcast --slow --verify -vvv
+	./set-epochs.sh -p staging && forge script script/DeployDev.s.sol --skip src --skip test --rpc-url sepolia --broadcast --slow --verify -vvv
 
 deploy-dev:
-	./set-epochs.sh -p dev && forge script script/Deploy.s.sol --skip src --skip test --rpc-url sepolia --broadcast --slow --verify -vvv
+	./set-epochs.sh -p dev && forge script script/DeployDev.s.sol --skip src --skip test --rpc-url sepolia --broadcast --slow --verify -vvv
 
 deploy-production:
 	./set-epochs.sh -p production && forge script script/DeployProduction.s.sol --skip src --skip test --rpc-url mainnet --broadcast --slow --verify -vvv
 
 deploy-local:
-	./set-epochs.sh -p dev && forge script script/Deploy.s.sol --skip src --skip test --rpc-url localhost --broadcast --slow -vvv
+	./set-epochs.sh -p dev && forge script script/DeployDev.s.sol --skip src --skip test --rpc-url localhost --broadcast --slow -vvv
 
 # Run slither
 slither:
