@@ -37,6 +37,6 @@ elif [ "$profile" = "production" ]; then
 fi
 
 sed "s/.*constant STARTING_TIMESTAMP.*/    uint40 internal constant STARTING_TIMESTAMP = $timestamp;/" lib/ttg/src/libs/PureEpochs.sol > ./lib/ttg/src/libs/PureEpochs1.sol
-sed "s/.*constant EPOCH_PERIOD.*/    uint40 internal constant EPOCH_PERIOD = $period;/" lib/ttg/src/libs/PureEpochs.sol > ./lib/ttg/src/libs/PureEpochs2.sol
+sed "s/.*constant EPOCH_PERIOD.*/    uint40 internal constant EPOCH_PERIOD = $period;/" lib/ttg/src/libs/PureEpochs1.sol > ./lib/ttg/src/libs/PureEpochs2.sol
 mv ./lib/ttg/src/libs/PureEpochs2.sol ./lib/ttg/src/libs/PureEpochs.sol
 rm ./lib/ttg/src/libs/PureEpochs1.sol
