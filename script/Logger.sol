@@ -9,7 +9,7 @@ import { IMinterGateway } from "../lib/protocol/src/interfaces/IMinterGateway.so
 
 library Logger {
     function logContracts(
-        address ttgRegistrar_,
+        address registrar_,
         address minterGateway_,
         address minterRateModel_,
         address earnerRateModel_
@@ -19,12 +19,12 @@ library Logger {
         console2.log("Minter Rate Model address:", minterRateModel_);
         console2.log("Earner Rate Model address:", earnerRateModel_);
 
-        console2.log("Registrar Address:", ttgRegistrar_);
-        console2.log("Power Token Address:", IRegistrar(ttgRegistrar_).powerToken());
-        console2.log("Zero Token Address:", IRegistrar(ttgRegistrar_).zeroToken());
-        console2.log("Standard Governor Address:", IRegistrar(ttgRegistrar_).standardGovernor());
-        console2.log("Emergency Governor Address:", IRegistrar(ttgRegistrar_).emergencyGovernor());
-        console2.log("Zero Governor Address:", IRegistrar(ttgRegistrar_).zeroGovernor());
-        console2.log("Distribution Vault Address:", IRegistrar(ttgRegistrar_).vault());
+        console2.log("Registrar Address:", registrar_);
+        console2.log("Power Token Address:", IRegistrar(registrar_).powerToken());
+        console2.log("Zero Token Address:", IRegistrar(registrar_).zeroToken());
+        console2.log("Standard Governor Address:", IRegistrar(registrar_).standardGovernor());
+        console2.log("Emergency Governor Address:", IRegistrar(registrar_).emergencyGovernor());
+        console2.log("Zero Governor Address:", IRegistrar(registrar_).zeroGovernor());
+        console2.log("Distribution Vault Address:", IRegistrar(registrar_).vault());
     }
 }
