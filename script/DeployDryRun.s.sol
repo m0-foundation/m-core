@@ -13,7 +13,7 @@ contract DeployDryRun is Script, DeployBase {
 
     address internal constant _WETH = 0xE67ABDA0D43f7AC8f37876bBF00D1DFadbB93aaa; // Sepolia WETH
 
-    // NOTE: Populate these arrays with Power ad Zero starting accounts respectively.
+    // NOTE: Populate these arrays with Power and Zero starting accounts respectively.
     address[][2] _initialAccounts = [
         [
             address(0xfa65B58D50a1904D22a9b5dcE1f6F08a4E12aB9e),

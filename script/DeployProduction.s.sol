@@ -13,17 +13,17 @@ contract DeployProduction is Script, DeployBase {
 
     address internal constant _WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2; // Mainnet WETH
 
-    // NOTE: Populate these arrays with Power ad Zero starting accounts respectively.
+    // NOTE: Populate these arrays with Power and Zero starting accounts respectively.
     address[][2] _initialAccounts = [
         [address(0xdeaDDeADDEaDdeaDdEAddEADDEAdDeadDEADDEaD)],
         [address(0xdeaDDeADDEaDdeaDdEAddEADDEAdDeadDEADDEaD)]
     ];
 
-    // NOTE: Populate these arrays with Power ad Zero starting balances respectively.
+    // NOTE: Populate these arrays with Power and Zero starting balances respectively.
     uint256[][2] _initialBalances = [[uint256(10_000)], [uint256(1_000_000_000e6)]];
 
     function run() external {
-        (address deployer_, ) = deriveRememberKey(vm.envString("MNEMONIC"), 0);
+        address deployer_ = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
 
         console2.log("Deployer:", deployer_);
 
