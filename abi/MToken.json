@@ -738,6 +738,19 @@
   {
     "type": "function",
     "name": "stopEarning",
+    "inputs": [
+      {
+        "name": "account_",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "stopEarning",
     "inputs": [],
     "outputs": [],
     "stateMutability": "nonpayable"

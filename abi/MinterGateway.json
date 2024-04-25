@@ -43,6 +43,19 @@
   },
   {
     "type": "function",
+    "name": "MIN_UPDATE_COLLATERAL_INTERVAL",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint32",
+        "internalType": "uint32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
     "name": "ONE",
     "inputs": [],
     "outputs": [
@@ -384,10 +397,15 @@
   },
   {
     "type": "function",
-    "name": "getPenaltyForMissedCollateralUpdates",
+    "name": "getLastSignatureTimestamp",
     "inputs": [
       {
         "name": "minter_",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "validator_",
         "type": "address",
         "internalType": "address"
       }
@@ -395,8 +413,8 @@
     "outputs": [
       {
         "name": "",
-        "type": "uint240",
-        "internalType": "uint240"
+        "type": "uint256",
+        "internalType": "uint256"
       }
     ],
     "stateMutability": "view"
@@ -537,7 +555,7 @@
   },
   {
     "type": "function",
-    "name": "isValidatorApprovedByTTG",
+    "name": "isValidatorApproved",
     "inputs": [
       {
         "name": "validator_",
@@ -563,6 +581,25 @@
         "name": "",
         "type": "uint128",
         "internalType": "uint128"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "latestProposedRetrievalTimestampOf",
+    "inputs": [
+      {
+        "name": "minter_",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint40",
+        "internalType": "uint40"
       }
     ],
     "stateMutability": "view"
@@ -1175,6 +1212,12 @@
         "internalType": "uint48"
       },
       {
+        "name": "minter",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
         "name": "canceller",
         "type": "address",
         "indexed": true,
@@ -1192,6 +1235,12 @@
         "type": "uint48",
         "indexed": true,
         "internalType": "uint48"
+      },
+      {
+        "name": "minter",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
       },
       {
         "name": "principalAmount",
@@ -1304,7 +1353,7 @@
   },
   {
     "type": "event",
-    "name": "PenaltyImposed",
+    "name": "MissedIntervalsPenaltyImposed",
     "inputs": [
       {
         "name": "minter",
@@ -1313,13 +1362,13 @@
         "internalType": "address"
       },
       {
-        "name": "principalAmount",
-        "type": "uint112",
+        "name": "missedIntervals",
+        "type": "uint40",
         "indexed": false,
-        "internalType": "uint112"
+        "internalType": "uint40"
       },
       {
-        "name": "amount",
+        "name": "penaltyAmount",
         "type": "uint240",
         "indexed": false,
         "internalType": "uint240"
@@ -1367,6 +1416,37 @@
         "type": "address",
         "indexed": true,
         "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "UndercollateralizedPenaltyImposed",
+    "inputs": [
+      {
+        "name": "minter",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "excessOwedM",
+        "type": "uint240",
+        "indexed": false,
+        "internalType": "uint240"
+      },
+      {
+        "name": "timeSpan",
+        "type": "uint40",
+        "indexed": false,
+        "internalType": "uint40"
+      },
+      {
+        "name": "penaltyAmount",
+        "type": "uint240",
+        "indexed": false,
+        "internalType": "uint240"
       }
     ],
     "anonymous": false
@@ -1476,7 +1556,13 @@
   {
     "type": "error",
     "name": "NotApprovedValidator",
-    "inputs": []
+    "inputs": [
+      {
+        "name": "validator",
+        "type": "address",
+        "internalType": "address"
+      }
+    ]
   },
   {
     "type": "error",
@@ -1489,6 +1575,27 @@
       },
       {
         "name": "requiredThreshold",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "OutdatedValidatorTimestamp",
+    "inputs": [
+      {
+        "name": "validator",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "timestamp",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "lastSignatureTimestamp",
         "type": "uint256",
         "internalType": "uint256"
       }
@@ -1562,7 +1669,7 @@
         "internalType": "uint40"
       },
       {
-        "name": "lastCollateralUpdate",
+        "name": "earliestAllowedTimestamp",
         "type": "uint40",
         "internalType": "uint40"
       }
