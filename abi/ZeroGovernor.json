@@ -1777,5 +1777,10 @@
         "internalType": "address"
       }
     ]
+  },
+  {
+    "type": "error",
+    "name": "ZeroVotingPower",
+    "inputs": []
   }
 ]

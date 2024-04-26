@@ -16,7 +16,7 @@ deploy-dry-run:
 	./set-epochs.sh -p dry-run && forge script script/DeployDryRun.s.sol --skip src --skip test --rpc-url sepolia --broadcast --slow --verify -vvv
 
 deploy-staging:
-	./set-epochs.sh -p staging && forge script script/DeployDev.s.sol --skip src --skip test --rpc-url sepolia --broadcast --slow --verify -vvv
+	forge script script/DeployDev.s.sol --skip src --skip test --rpc-url sepolia --broadcast --slow --verify -vvv
 
 deploy-dev:
 	./set-epochs.sh -p dev && forge script script/DeployDev.s.sol --skip src --skip test --rpc-url sepolia --broadcast --slow --verify -vvv
