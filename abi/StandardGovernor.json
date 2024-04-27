@@ -1852,5 +1852,10 @@
     "type": "error",
     "name": "TransferFromFailed",
     "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "ZeroVotingPower",
+    "inputs": []
   }
 ]

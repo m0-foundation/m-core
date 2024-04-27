@@ -1671,5 +1671,10 @@
     "type": "error",
     "name": "SignerMismatch",
     "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "ZeroVotingPower",
+    "inputs": []
   }
 ]

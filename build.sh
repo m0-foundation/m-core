@@ -39,7 +39,7 @@ jq '.abi' ./out/MockToken.sol/MockToken.json > ./abi/MockToken.json
 jq '.abi' ./out/MinterGateway.sol/MinterGateway.json > ./abi/MinterGateway.json
 jq '.abi' ./out/MToken.sol/MToken.json > ./abi/MToken.json
 jq '.abi' ./out/MinterRateModel.sol/MinterRateModel.json > ./abi/MinterRateModel.json
-jq '.abi' ./out/StableEarnerRateModel.sol/StableEarnerRateModel.json > ./abi/StableEarnerRateModel.json
+jq '.abi' ./out/EarnerRateModel.sol/EarnerRateModel.json > ./abi/EarnerRateModel.json
 
 mkdir -p bytecode
 
@@ -59,7 +59,7 @@ MockTokenBytecode=$(jq '.bytecode.object' ./out/MockToken.sol/MockToken.json)
 MinterGatewayBytecode=$(jq '.bytecode.object' ./out/MinterGateway.sol/MinterGateway.json)
 MTokenBytecode=$(jq '.bytecode.object' ./out/MToken.sol/MToken.json)
 MinterRateModelBytecode=$(jq '.bytecode.object' ./out/MinterRateModel.sol/MinterRateModel.json)
-StableEarnerRateModelBytecode=$(jq '.bytecode.object' ./out/StableEarnerRateModel.sol/StableEarnerRateModel.json)
+EarnerRateModelBytecode=$(jq '.bytecode.object' ./out/EarnerRateModel.sol/EarnerRateModel.json)
 
 echo "{ \"bytecode\": ${EmergencyGovernorBytecode} }" >./bytecode/EmergencyGovernor.json
 echo "{ \"bytecode\": ${EmergencyGovernorDeployerBytecode} }" >./bytecode/EmergencyGovernorDeployer.json
@@ -77,4 +77,4 @@ echo "{ \"bytecode\": ${MockTokenBytecode} }" >./bytecode/MockToken.json
 echo "{ \"bytecode\": ${MinterGatewayBytecode} }" >./bytecode/MinterGateway.json
 echo "{ \"bytecode\": ${MTokenBytecode} }" >./bytecode/MToken.json
 echo "{ \"bytecode\": ${MinterRateModelBytecode} }" >./bytecode/MinterRateModel.json
-echo "{ \"bytecode\": ${StableEarnerRateModelBytecode} }" >./bytecode/StableEarnerRateModel.json
+echo "{ \"bytecode\": ${EarnerRateModelBytecode} }" >./bytecode/EarnerRateModel.json
