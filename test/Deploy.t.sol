@@ -19,6 +19,8 @@ import { IStandardGovernorDeployer } from "../lib/ttg/src/interfaces/IStandardGo
 import { IZeroGovernor } from "../lib/ttg/src/interfaces/IZeroGovernor.sol";
 import { IZeroToken } from "../lib/ttg/src/interfaces/IZeroToken.sol";
 
+import { PureEpochs } from "../lib/ttg/src/libs/PureEpochs.sol";
+
 import { DeployBase } from "../script/DeployBase.sol";
 
 contract Deploy is Test, DeployBase {
@@ -68,6 +70,11 @@ contract Deploy is Test, DeployBase {
         assertEq(IRegistrar(registrar_).vault(), vault_);
         assertEq(IRegistrar(registrar_).zeroGovernor(), zeroGovernor_);
         assertEq(IRegistrar(registrar_).zeroToken(), zeroToken_);
+
+        assertEq(vm.getBlockTimestamp(), 1_711_468_000);
+        assertEq(PureEpochs.STARTING_TIMESTAMP, 1_710_171_999);
+        assertEq(PureEpochs.EPOCH_PERIOD, 15 days);
+        assertEq(IRegistrar(registrar_).clock(), 2);
 
         // Vault assertions
         assertEq(IDistributionVault(vault_).zeroToken(), zeroToken_);
