@@ -1,4 +1,4 @@
-# M^0 Protocol
+# M^0 Core
 
 1. Deploy Protocol and TTG
 
