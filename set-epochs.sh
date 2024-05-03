@@ -36,7 +36,6 @@ elif [ "$profile" = "production" ]; then
     period=1296000 # 15 days
 fi
 
-# TODO:  Optimize commands
 sed "s/.*constant STARTING_TIMESTAMP.*/    uint40 internal constant STARTING_TIMESTAMP = $timestamp;/" lib/ttg/src/libs/PureEpochs.sol > ./lib/ttg/src/libs/PureEpochs1.sol
 sed "s/.*constant EPOCH_PERIOD.*/    uint40 internal constant EPOCH_PERIOD = $period;/" lib/ttg/src/libs/PureEpochs1.sol > ./lib/ttg/src/libs/PureEpochs2.sol
 sed "s/.*mode=epoch.*/        return \"mode=epoch\&epochUnderlyingSource=blockTimestamp\&epochStartingTimestamp=$timestamp\&epochPeriod=$period\";/" lib/ttg/src/libs/PureEpochs2.sol > ./lib/ttg/src/libs/PureEpochs3.sol

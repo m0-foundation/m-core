@@ -31,7 +31,7 @@ contract WETH is IWETH {
 
         balanceOf[msg.sender] -= amount_;
 
-        (bool success_, bytes memory returnData_) = msg.sender.call{ value: amount_ }("");
+        (bool success_, ) = msg.sender.call{ value: amount_ }("");
 
         if (!success_) revert();
     }
