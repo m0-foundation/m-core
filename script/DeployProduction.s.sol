@@ -9,7 +9,7 @@ import { Logger } from "./Logger.sol";
 import { DeployBase } from "./DeployBase.sol";
 
 contract DeployProduction is Script, DeployBase {
-    uint256 internal constant _STANDARD_PROPOSAL_FEE = 0.5 ether;
+    uint256 internal constant _STANDARD_PROPOSAL_FEE = 0.2 ether;
 
     address internal constant _WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2; // Mainnet WETH
 
