@@ -4,6 +4,7 @@
     {
       "files": "*.sol",
       "options": {
+        "compiler": "0.8.23",
         "parser": "solidity-parse",
         "tabWidth": 4,
         "singleQuote": false,

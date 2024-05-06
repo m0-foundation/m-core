@@ -27,6 +27,9 @@ deploy-production:
 deploy-local:
 	./set-epochs.sh -p dev && forge script script/DeployDev.s.sol --skip src --skip test --rpc-url localhost --broadcast --slow -vvv
 
+deploy-fork:
+	./set-epochs.sh -p production && forge script script/DeployProduction.s.sol --skip src --skip test --rpc-url localhost --broadcast --slow -vvv
+
 # Run slither
 slither:
 	./set-epochs.sh -p production && FOUNDRY_PROFILE=production forge build --build-info --skip '*/test/**' --skip '*/script/**' --force && slither --compile-force-framework foundry --ignore-compile --sarif results.sarif --config-file slither.config.json .
