@@ -31,8 +31,7 @@ elif [ "$profile" = "test" ]; then
     period=1296000 # 15 days
 elif [ "$profile" = "production" ]; then
     # Mainnet has 15 day epochs
-    timestamp=$(date +%s)
-    timestamp=$(expr $timestamp - 1296001)
+    timestamp="1713099600" # 9am EST, April 14th 2024
     period=1296000 # 15 days
 fi
 
