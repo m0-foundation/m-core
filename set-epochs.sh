@@ -27,7 +27,7 @@ elif [ "$profile" = "dev" ]; then
     period=400 # 400 seconds
 elif [ "$profile" = "test" ]; then
     # Mainnet has 15 day epochs
-    timestamp="1710171999"
+    timestamp="1713099600"
     period=1296000 # 15 days
 elif [ "$profile" = "production" ]; then
     # Mainnet has 15 day epochs
