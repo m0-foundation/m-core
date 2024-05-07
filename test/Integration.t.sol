@@ -36,7 +36,7 @@ contract IntegrationTests is Test, DeployBase {
 
     address internal constant _WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
-    uint256 internal constant _STANDARD_PROPOSAL_FEE = 0.01 ether;
+    uint256 internal constant _STANDARD_PROPOSAL_FEE = 0.2 ether;
 
     bytes32 internal constant _BASE_MINTER_RATE = "base_minter_rate";
     bytes32 internal constant _EARNER_RATE_MODEL = "earner_rate_model";
@@ -448,18 +448,10 @@ contract IntegrationTests is Test, DeployBase {
     bytes[] internal _zeroProposalCalldatas;
 
     function setUp() external {
-        vm.startPrank(_DEPLOYER);
-
-        (_registrar, _minterGateway, _minterRateModel, _earnerRateModel) = deployCore(
-            _DEPLOYER,
-            _DEPLOYER_NONCE,
-            _initialAccounts,
-            _initialBalances,
-            _STANDARD_PROPOSAL_FEE,
-            _WETH
-        );
-
-        vm.stopPrank();
+        _registrar = 0x119FbeeDD4F4f4298Fb59B720d5654442b81ae2c;
+        _minterGateway = 0xf7f9638cb444D65e5A40bF5ff98ebE4ff319F04E;
+        _minterRateModel = 0xcA144B0Ebf6B8d1dDB5dDB730a8d530fe7f70d62;
+        _earnerRateModel = 0x6b198067E22d3A4e5aB8CeCda41a6Da56DBf5F59;
 
         _emergencyGovernorDeployer = getExpectedEmergencyGovernorDeployer(_DEPLOYER, _DEPLOYER_NONCE);
         _emergencyGovernor = getExpectedEmergencyGovernor(_DEPLOYER, _DEPLOYER_NONCE);
@@ -681,8 +673,8 @@ contract IntegrationTests is Test, DeployBase {
 
         // Creating Standard Proposals
 
-        _depositToWeth(_DEPLOYER, 0.03 ether);
-        _approveWETH(_DEPLOYER, _standardGovernor, 0.03 ether);
+        _depositToWeth(_DEPLOYER, 0.6 ether);
+        _approveWETH(_DEPLOYER, _standardGovernor, 0.6 ether);
 
         _propose(_DEPLOYER, _standardGovernor, _encodeAdd(_EARNERS_LIST, _accounts[0]));
         _propose(_DEPLOYER, _standardGovernor, _encodeAdd(_VALIDATORS_LIST, _validators[0]));

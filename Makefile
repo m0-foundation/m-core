@@ -45,7 +45,7 @@ tests:
 	./set-epochs.sh -p test && RPC_URL=$(MAINNET_RPC_URL) ./test.sh -p $(profile)
 
 test-match:
-	./set-epochs.sh -p test && RPC_URL=$(MAINNET_RPC_URL) ./test.sh -t $(match) -p $(profile)
+	./set-epochs.sh -p test && RPC_URL=$(MAINNET_RPC_URL) ./test.sh -t $(match) -p $(profile) -v
 
 fuzz:
 	./set-epochs.sh -p test && RPC_URL=$(MAINNET_RPC_URL) ./test.sh -t testFuzz -p $(profile)
