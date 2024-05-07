@@ -36,7 +36,7 @@ fi
 
 if [ -z "$test" ];
 then
-    forge test --match-path "test/*" $gasReport;
+    forge test --match-path "test/*" --fork-url $RPC_URL $gasReport;
 else
-    forge test --match-test "$test" $gasReport $verbosity;
+    forge test --match-test "$test" --fork-url $RPC_URL $gasReport $verbosity;
 fi

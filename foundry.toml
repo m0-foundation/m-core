@@ -15,8 +15,8 @@ optimizer = true
 optimizer_runs = 999999
 verbosity = 3
 ignored_error_codes = []
-block_number = 19_519_600
-block_timestamp = 1_711_468_000
+block_number = 19_812_380
+block_timestamp = 1_715_029_200
 build_info = true
 sizes = true
 
