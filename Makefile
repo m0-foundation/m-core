@@ -42,7 +42,7 @@ build:
 	./set-epochs.sh -p production && ./build.sh
 
 tests:
-	./set-epochs.sh -p test && ./test.sh -p $(profile)
+	./set-epochs.sh -p test && forge test --no-match-path 'test/fork/*'
 
 fuzz:
 	./set-epochs.sh -p test && ./test.sh -t testFuzz -p $(profile)
