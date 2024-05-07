@@ -24,6 +24,9 @@ deploy-dev:
 deploy-production:
 	./set-epochs.sh -p production && forge script script/DeployProduction.s.sol --skip src --skip test --rpc-url $(MAINNET_RPC_URL) --broadcast --slow --verify -vvv
 
+sync-production:
+	forge script script/SyncAccounts.s.sol --skip src --skip test --rpc-url $(MAINNET_RPC_URL) --broadcast --slow --verify -vvv
+
 deploy-local:
 	./set-epochs.sh -p dev && forge script script/DeployDev.s.sol --skip src --skip test --rpc-url $(LOCALHOST_RPC_URL) --broadcast --slow -vvv
 
