@@ -43,9 +43,6 @@ contract ForkTests is TestUtils, DeployBase {
     function testFork_checkDistribution() public {
         vm.selectFork(localhostFork);
 
-        _warpToNextEpoch();
-        _warpToNextEpoch();
-
         IERC20 powerToken_ = IERC20(0xCafac3dD18aC6c6e92c921884f9E4176737C052c);
         IERC20 zeroToken_ = IERC20(0x5FC8d32690cc91D4c39d9d3abcBD16989F875707);
 
