@@ -4,11 +4,12 @@ pragma solidity 0.8.23;
 
 import { IERC20 } from "../../lib/protocol/lib/common/src/interfaces/IERC20.sol";
 
+import { InitialAccountsFixture } from "../fixture/InitialAccountsFixture.sol";
 import { TestUtils } from "../utils/TestUtils.sol";
 
 import { DeployBase } from "../../script/DeployBase.sol";
 
-contract ForkTests is TestUtils, DeployBase {
+contract ForkTests is TestUtils, DeployBase, InitialAccountsFixture {
     uint256 public localhostFork;
 
     // DeployProduction script address
