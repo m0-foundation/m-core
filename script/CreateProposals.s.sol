@@ -69,7 +69,7 @@ contract CreateProposals is Script, DeployBase {
 
     bytes32 internal constant _MAX_EARNER_RATE = "max_earner_rate";
     string internal constant _MAX_EARNER_RATE_DESC =
-        "# Set Earner Rate to 5% [500 bps]\n\nThis proposal sets the Earner Rate to 5%. This means that any address on the Earner List will be earning up to an annualized 5% on M held in their account.";
+        "# Set Max Earner Rate to 5% [500 bps]\n\nThis proposal sets the Max Earner Rate to 5%. This means that any address on the Earner List will be earning up to an annualized 5% on M held in their account.";
 
     function run() external {
         address deployer_ = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
