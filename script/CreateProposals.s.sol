@@ -16,7 +16,7 @@ contract CreateProposals is Script, DeployBase {
     bytes32 internal constant _MINTERS_LIST = "minters";
     address internal constant _FIRST_MINTER = 0x7F7489582b64ABe46c074A45d758d701c2CA5446;
     string internal constant _MINTER_PROPOSAL_DESC =
-        "# Add Minter One Ltd to Minter List\n\nThis proposal will onboard Minter One Ltd as a Minter in the M^0 Protocol. This will give Minter One Ltd the ability to generate M.";
+        "# Add Minter One Generator (SPV) Ltd to Minter List\n\nThis proposal will onboard Minter One Generator (SPV) Ltd as a Minter in the M^0 Protocol. This will give Minter One Generator (SPV) Ltd the ability to generate M.";
 
     bytes32 internal constant _VALIDATORS_LIST = "validators";
     address internal constant _FIRST_VALIDATOR = 0xEF1D05E206Af8103619DF7Cb576068e11Fd07270;
