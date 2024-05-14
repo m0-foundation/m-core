@@ -56,7 +56,7 @@ contract CreateProposals is Script, DeployBase {
     bytes32 internal constant _MINTER_RATE_MODEL = "minter_rate_model";
     address internal constant _MINTER_RATE_MODEL_SC = 0xcA144B0Ebf6B8d1dDB5dDB730a8d530fe7f70d62; // Mainnet Minter Rate Model
     string internal constant _MINTER_RATE_MODEL_DESC =
-        "# Set Minter Interest Rate Model smart contract\n\nThis proposal sets the minter rate model smart contract to 0xcA144B0Ebf6B8d1dDB5dDB730a8d530fe7f70d62, which returns a constant value of minter rate set by the governance.";
+        "# Set Minter Interest Rate Model smart contract\n\nThis proposal sets the Minter Rate Model smart contract to 0xcA144B0Ebf6B8d1dDB5dDB730a8d530fe7f70d62, which returns a constant value of Minter Rate set by the governance.";
 
     bytes32 internal constant _BASE_MINTER_RATE = "base_minter_rate";
     string internal constant _BASE_MINTER_RATE_DESC =
@@ -65,7 +65,7 @@ contract CreateProposals is Script, DeployBase {
     bytes32 internal constant _EARNER_RATE_MODEL = "earner_rate_model";
     address internal constant _EARNER_RATE_MODEL_SC = 0x6b198067E22d3A4e5aB8CeCda41a6Da56DBf5F59; // Mainnet Earner Rate Model
     string internal constant _EARNER_RATE_MODEL_DESC =
-        "# Set Earner Interest Rate Model smart contract\n\nThis proposal sets the earner rate model smart contract to 0x6b198067E22d3A4e5aB8CeCda41a6Da56DBf5F59. The resulting earner rate is derived from 3 parameters - total active owed M, total earning supply, and current minter rate - to determine a safe earner rate, which is capped by the governance registrar variable max_earner_rate. The safe earner rate ensures that the amount of M paid to Earners never exceeds the amount of M charged to Minters (via the Minter Rate).";
+        "# Set Earner Interest Rate Model smart contract\n\nThis proposal sets the Earner Rate Model smart contract to 0x6b198067E22d3A4e5aB8CeCda41a6Da56DBf5F59. The resulting earner rate is derived from 3 parameters - total active owed M, total earning supply, and current minter rate - to determine a safe earner rate, which is capped by the Max Earner Rate. The safe earner rate ensures that the amount of M paid to Earners never exceeds the amount of M charged to Minters (via the Minter Rate).";
 
     bytes32 internal constant _MAX_EARNER_RATE = "max_earner_rate";
     string internal constant _MAX_EARNER_RATE_DESC =
