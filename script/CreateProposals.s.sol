@@ -9,19 +9,19 @@ import { IEmergencyGovernor } from "../lib/ttg/src/interfaces/IEmergencyGovernor
 
 import { DeployBase } from "./DeployBase.sol";
 
-contract CreateDevProposals is Script, DeployBase {
-    address internal constant _EMERGENCY_GOVERNOR = 0x0FeA9F6F610d800d8dd62Ace38663B213b087a13; // Sepolia Emergency Governor
+contract CreateProposals is Script, DeployBase {
+    address internal constant _EMERGENCY_GOVERNOR = 0x886d405949F709bC3f4451491bDd07ff51Cdf90A; // Mainnet Emergency Governor
 
     // Actors
     bytes32 internal constant _MINTERS_LIST = "minters";
-    address internal constant _FIRST_MINTER = 0x14521ECf225E912Feb2C7827CA79Ea13a744d8d5;
+    address internal constant _FIRST_MINTER = 0x7F7489582b64ABe46c074A45d758d701c2CA5446;
     string internal constant _MINTER_PROPOSAL_DESC =
-        "# Onboard [Minter Name] as a Minter\n\nThis proposal will onboard [Minter Name] as a Minter in the M^0 Protocol. This will give [Minter Name] the ability to generate M. [Minter Name] has its jurisdiction in the British Virgin Islands.";
+        "# Add Minter One Ltd to Minter List\n\nThis proposal will onboard Minter One Ltd as a Minter in the M^0 Protocol. This will give Minter One Ltd the ability to generate M.";
 
     bytes32 internal constant _VALIDATORS_LIST = "validators";
-    address internal constant _FIRST_VALIDATOR = 0x14521ECf225E912Feb2C7827CA79Ea13a744d8d5;
+    address internal constant _FIRST_VALIDATOR = 0xEF1D05E206Af8103619DF7Cb576068e11Fd07270;
     string internal constant _VALIDATOR_PROPOSAL_DESC =
-        "# Add Validator One to Validator List\n\nThis proposal will onboard Validator One as a Validator in the M^0 Protocol. This will give Validator One the ability to sign collateral updates from Minters and to Cancel mints or to temporarily Freeze a Minter.";
+        "# Add Validator One GmbH to Validator List\n\nThis proposal will onboard Validator One GmbH as a Validator in the M^0 Protocol. This will give Validator One GmbH the ability to sign collateral updates from Minters and to Cancel mints or to temporarily Freeze a Minter.";
 
     // Protocol parameters
     bytes32 internal constant _UPDATE_COLLATERAL_INTERVAL = "update_collateral_interval";
@@ -54,22 +54,22 @@ contract CreateDevProposals is Script, DeployBase {
 
     // Interest rate models
     bytes32 internal constant _MINTER_RATE_MODEL = "minter_rate_model";
-    address internal constant _MINTER_RATE_MODEL_SC = 0x19A2f067C97745800779899B0F177baF54d187AA; // Sepolia Minter Rate Model
+    address internal constant _MINTER_RATE_MODEL_SC = 0xcA144B0Ebf6B8d1dDB5dDB730a8d530fe7f70d62; // Mainnet Minter Rate Model
     string internal constant _MINTER_RATE_MODEL_DESC =
-        "# Set minter interest rate model smart contract\n\nMinter rate calculation is determined by an algorithmic model smart contract. The minter rate is a constant value set by governance.";
+        "# Set Minter Interest Rate Model smart contract\n\nThis proposal sets the minter rate model smart contract to 0xcA144B0Ebf6B8d1dDB5dDB730a8d530fe7f70d62, which returns a constant value of minter rate set by the governance.";
 
     bytes32 internal constant _BASE_MINTER_RATE = "base_minter_rate";
     string internal constant _BASE_MINTER_RATE_DESC =
         "# Set Minter Rate to 1% [100 bps]\n\nThis proposal sets the Minter Rate to 1%. This means that Minters will pay an annualized 1% on any Owed M (i.e. M that they have generated).";
 
     bytes32 internal constant _EARNER_RATE_MODEL = "earner_rate_model";
-    address internal constant _EARNER_RATE_MODEL_SC = 0xfb434Fd8B5838433F86bf04b4B50Ce47320A8B87; // Sepolia Earner Rate Model
+    address internal constant _EARNER_RATE_MODEL_SC = 0x6b198067E22d3A4e5aB8CeCda41a6Da56DBf5F59; // Mainnet Earner Rate Model
     string internal constant _EARNER_RATE_MODEL_DESC =
-        "# Set earner interest rate model smart contract\n\nEarner rate calculation is determined by an algorithmic model smart contract. In addition to the desired rate set by governance, the earner rate model takes 3 parameters - total active owed M, total earning supply, and current minter rate to determine a safe earner rate. The safe earner rate helps to guarantee that M is always sufficiently collateralized and fully backed by collateral by ensuring that the amount of M being paid to Earners never exceeds the amount of M being charged to Minters via the Minter Rate.";
+        "# Set Earner Interest Rate Model smart contract\n\nThis proposal sets the earner rate model smart contract to 0x6b198067E22d3A4e5aB8CeCda41a6Da56DBf5F59. The resulting earner rate is derived from 3 parameters - total active owed M, total earning supply, and current minter rate - to determine a safe earner rate, which is capped by the governance registrar variable max_earner_rate. The safe earner rate ensures that the amount of M paid to Earners never exceeds the amount of M charged to Minters (via the Minter Rate).";
 
     bytes32 internal constant _MAX_EARNER_RATE = "max_earner_rate";
     string internal constant _MAX_EARNER_RATE_DESC =
-        "# Set Earner Rate to 5% [500 bps]\n\nThis proposal sets the Earner Rate to 5%, which after being filtered through the currently proposed Earner Rate Model is actually 4.5%. This means that any address on the Earner List will be earning an annualized 4.5% on M held in their account.";
+        "# Set Earner Rate to 5% [500 bps]\n\nThis proposal sets the Earner Rate to 5%. This means that any address on the Earner List will be earning up to an annualized 5% on M held in their account.";
 
     function run() external {
         address deployer_ = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
@@ -81,42 +81,77 @@ contract CreateDevProposals is Script, DeployBase {
         vm.startBroadcast(deployer_);
 
         // Protocol Parameters - 11 proposals
-        _propose(
+        uint256 eranerRateModelProposalId_ = _propose(
             deployer_,
             emergencyGovernor_,
-            _encodeSet(_EARNER_RATE_MODEL, address(_EARNER_RATE_MODEL_SC)),
+            _encodeSet(_EARNER_RATE_MODEL, _EARNER_RATE_MODEL_SC),
             _EARNER_RATE_MODEL_DESC
         );
 
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_MAX_EARNER_RATE, 500), _MAX_EARNER_RATE_DESC);
-
-        _propose(
+        uint256 maxEarnerRateProposalId_ = _propose(
             deployer_,
             emergencyGovernor_,
-            _encodeSet(_MINTER_RATE_MODEL, address(_MINTER_RATE_MODEL_SC)),
+            _encodeSet(_MAX_EARNER_RATE, 500),
+            _MAX_EARNER_RATE_DESC
+        );
+
+        uint256 minterRateModelProposalId_ = _propose(
+            deployer_,
+            emergencyGovernor_,
+            _encodeSet(_MINTER_RATE_MODEL, _MINTER_RATE_MODEL_SC),
             _MINTER_RATE_MODEL_DESC
         );
 
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_BASE_MINTER_RATE, 100), _BASE_MINTER_RATE_DESC);
+        uint256 baseMinterRateProposalId_ = _propose(
+            deployer_,
+            emergencyGovernor_,
+            _encodeSet(_BASE_MINTER_RATE, 100),
+            _BASE_MINTER_RATE_DESC
+        );
 
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_MINTER_FREEZE_TIME, 6 hours), _MINTER_FREEZE_TIME_DESC);
+        uint256 minterFreezeTimeProposalId_ = _propose(
+            deployer_,
+            emergencyGovernor_,
+            _encodeSet(_MINTER_FREEZE_TIME, 6 hours),
+            _MINTER_FREEZE_TIME_DESC
+        );
 
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_MINT_TTL, 3 hours), _MINT_TTL_DESC);
+        uint256 mintTTLProposalId_ = _propose(
+            deployer_,
+            emergencyGovernor_,
+            _encodeSet(_MINT_TTL, 3 hours),
+            _MINT_TTL_DESC
+        );
 
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_MINT_DELAY, 1 hours), _MINT_DELAY_DESC);
+        uint256 mintDelayProposalId_ = _propose(
+            deployer_,
+            emergencyGovernor_,
+            _encodeSet(_MINT_DELAY, 1 hours),
+            _MINT_DELAY_DESC
+        );
 
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_MINT_RATIO, 9_500), _MINT_RATIO_DESC);
+        uint256 mintRatioProposalId_ = _propose(
+            deployer_,
+            emergencyGovernor_,
+            _encodeSet(_MINT_RATIO, 9_500),
+            _MINT_RATIO_DESC
+        );
 
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_PENALTY_RATE, 5), _PENALTY_RATE_DESC);
+        uint256 penaltyRateProposalId_ = _propose(
+            deployer_,
+            emergencyGovernor_,
+            _encodeSet(_PENALTY_RATE, 5),
+            _PENALTY_RATE_DESC
+        );
 
-        _propose(
+        uint256 updateCollateralValidatorThresholdProposalId_ = _propose(
             deployer_,
             emergencyGovernor_,
             _encodeSet(_UPDATE_COLLATERAL_VALIDATOR_THRESHOLD, 1),
             _UPDATE_COLLATERAL_VALIDATOR_THRESHOLD_DESC
         );
 
-        _propose(
+        uint256 updateCollateralIntervalProposalId_ = _propose(
             deployer_,
             emergencyGovernor_,
             _encodeSet(_UPDATE_COLLATERAL_INTERVAL, 30 hours),
@@ -125,7 +160,7 @@ contract CreateDevProposals is Script, DeployBase {
 
         // Actors - 2 proposals
         // Add first validator proposal
-        _propose(
+        uint256 addValidatorProposalId_ = _propose(
             deployer_,
             emergencyGovernor_,
             _addToList(_VALIDATORS_LIST, _FIRST_VALIDATOR),
@@ -133,9 +168,31 @@ contract CreateDevProposals is Script, DeployBase {
         );
 
         // Add first minter proposal
-        _propose(deployer_, emergencyGovernor_, _addToList(_MINTERS_LIST, _FIRST_MINTER), _MINTER_PROPOSAL_DESC);
+        uint256 addMinterProposalId_ = _propose(
+            deployer_,
+            emergencyGovernor_,
+            _addToList(_MINTERS_LIST, _FIRST_MINTER),
+            _MINTER_PROPOSAL_DESC
+        );
 
         vm.stopBroadcast();
+
+        console2.log("Add Minter Proposal ID:", addMinterProposalId_);
+        console2.log("Add Validator Proposal ID:", addValidatorProposalId_);
+        console2.log("Update Collateral Interval Proposal ID:", updateCollateralIntervalProposalId_);
+        console2.log(
+            "Update Collateral Validator Threshold Proposal ID:",
+            updateCollateralValidatorThresholdProposalId_
+        );
+        console2.log("Penalty Rate Proposal ID:", penaltyRateProposalId_);
+        console2.log("Mint Ratio Proposal ID:", mintRatioProposalId_);
+        console2.log("Mint Delay Proposal ID:", mintDelayProposalId_);
+        console2.log("Mint TTL Proposal ID:", mintTTLProposalId_);
+        console2.log("Minter Freeze Time Proposal ID:", minterFreezeTimeProposalId_);
+        console2.log("Base Minter Rate Proposal ID:", baseMinterRateProposalId_);
+        console2.log("Minter Rate Model Proposal ID:", minterRateModelProposalId_);
+        console2.log("Max Earner Rate Proposal ID:", maxEarnerRateProposalId_);
+        console2.log("Earner Rate Model Proposal ID:", eranerRateModelProposalId_);
     }
 
     function _propose(
