@@ -51,9 +51,19 @@ contract Executor {
     ];
 
     constructor() {
-        for (uint256 i_; i_ < proposalCalldatas_.length; ++i_) {
-            _execute(proposalCalldatas_[i_]);
-        }
+        _execute(_encodeSet(_EARNER_RATE_MODEL, _EARNER_RATE_MODEL_SC));
+        _execute(_encodeSet(_MAX_EARNER_RATE, 500));
+        _execute(_encodeSet(_MINTER_RATE_MODEL, _MINTER_RATE_MODEL_SC));
+        _execute(_encodeSet(_BASE_MINTER_RATE, 100));
+        _execute(_encodeSet(_MINTER_FREEZE_TIME, 6 hours));
+        _execute(_encodeSet(_MINT_TTL, 3 hours));
+        _execute(_encodeSet(_MINT_DELAY, 1 hours));
+        _execute(_encodeSet(_MINT_RATIO, 9_500));
+        _execute(_encodeSet(_PENALTY_RATE, 5));
+        _execute(_encodeSet(_UPDATE_COLLATERAL_VALIDATOR_THRESHOLD, 1));
+        _execute(_encodeSet(_UPDATE_COLLATERAL_INTERVAL, 30 hours));
+        _execute(_addToList(_VALIDATORS_LIST, _FIRST_VALIDATOR));
+        _execute(_addToList(_MINTERS_LIST, _FIRST_MINTER));
 
         selfdestruct(payable(msg.sender));
     }
