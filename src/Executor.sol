@@ -34,22 +34,6 @@ contract Executor {
 
     bytes32 internal constant _MAX_EARNER_RATE = "max_earner_rate";
 
-    bytes[13] proposalCalldatas_ = [
-        _encodeSet(_EARNER_RATE_MODEL, _EARNER_RATE_MODEL_SC),
-        _encodeSet(_MAX_EARNER_RATE, 500),
-        _encodeSet(_MINTER_RATE_MODEL, _MINTER_RATE_MODEL_SC),
-        _encodeSet(_BASE_MINTER_RATE, 100),
-        _encodeSet(_MINTER_FREEZE_TIME, 6 hours),
-        _encodeSet(_MINT_TTL, 3 hours),
-        _encodeSet(_MINT_DELAY, 1 hours),
-        _encodeSet(_MINT_RATIO, 9_500),
-        _encodeSet(_PENALTY_RATE, 5),
-        _encodeSet(_UPDATE_COLLATERAL_VALIDATOR_THRESHOLD, 1),
-        _encodeSet(_UPDATE_COLLATERAL_INTERVAL, 30 hours),
-        _addToList(_VALIDATORS_LIST, _FIRST_VALIDATOR),
-        _addToList(_MINTERS_LIST, _FIRST_MINTER)
-    ];
-
     constructor() {
         _execute(_encodeSet(_EARNER_RATE_MODEL, _EARNER_RATE_MODEL_SC));
         _execute(_encodeSet(_MAX_EARNER_RATE, 500));
