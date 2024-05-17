@@ -8,6 +8,8 @@ import { Test } from "../../lib/forge-std/src/Test.sol";
 
 contract TestUtils is Test {
     /* ============ Helpers ============ */
+
+    /* ============ Epochs ============ */
     function _currentEpoch() internal view returns (uint16) {
         return PureEpochs.currentEpoch();
     }
@@ -42,5 +44,13 @@ contract TestUtils is Test {
 
     function _jumpSeconds(uint256 seconds_) internal {
         vm.warp(vm.getBlockTimestamp() + seconds_);
+    }
+
+    /* ============ Signatures ============ */
+
+    function _getSignature(bytes32 digest_, uint256 privateKey_) internal pure returns (bytes memory) {
+        (uint8 v_, bytes32 r_, bytes32 s_) = vm.sign(privateKey_, digest_);
+
+        return abi.encodePacked(r_, s_, v_);
     }
 }
