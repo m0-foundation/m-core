@@ -4,14 +4,13 @@ set -e
 gas=false
 verbose=false
 
-while getopts gp:t:v flag
-do
-    case "${flag}" in
-        g) gas=true;;
-        p) profile=${OPTARG};;
-        t) test=${OPTARG};;
-        v) verbose=true;;
-    esac
+while getopts gp:t:v flag; do
+	case "${flag}" in
+	g) gas=true ;;
+	p) profile=${OPTARG} ;;
+	t) test=${OPTARG} ;;
+	v) verbose=true ;;
+	esac
 done
 
 export FOUNDRY_PROFILE=$profile
@@ -20,23 +19,20 @@ echo Higher verbosity: $verbose
 echo Gas report: $gas
 echo Test Match pattern: $test
 
-if [ "$verbose" = false ];
-then
-    verbosity="-vv"
+if [ "$verbose" = false ]; then
+	verbosity="-vv"
 else
-    verbosity="-vvvv"
+	verbosity="-vvvv"
 fi
 
-if [ "$gas" = false ];
-then
-    gasReport=""
+if [ "$gas" = false ]; then
+	gasReport=""
 else
-    gasReport="--gas-report"
+	gasReport="--gas-report"
 fi
 
-if [ -z "$test" ];
-then
-    forge test --match-path "test/*" $gasReport;
+if [ -z "$test" ]; then
+	forge test --match-path "test/*" --no-match-path 'test/fork/*' --fork-url $RPC_URL $gasReport
 else
-    forge test --match-test "$test" $gasReport $verbosity;
+	forge test --match-test "$test" --fork-url $RPC_URL $gasReport $verbosity
 fi

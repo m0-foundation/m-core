@@ -3,7 +3,7 @@
 pragma solidity 0.8.23;
 
 contract InitialAccountsFixture {
-    address[][2] internal _expectedInitialAccounts = [
+    address[][2] internal _initialAccounts = [
         [
             address(0x333C9430c42Ca172cCF744c139107F9FDAd0c44b),
             address(0xAb36309A87FC548f5E4B40E1b1f326feB5Ee7772),
@@ -182,7 +182,7 @@ contract InitialAccountsFixture {
         ]
     ];
 
-    uint256[][2] internal _expectedInitialBalances = [
+    uint256[][2] internal _initialBalances = [
         [
             uint256(10_000),
             uint256(10_000),
