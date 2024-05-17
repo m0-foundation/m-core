@@ -7,6 +7,10 @@
   "license": "GPL-3.0",
   "scripts": {
     "coverage": "forge coverage --report lcov && lcov --extract lcov.info -o lcov.info 'src/*' && genhtml lcov.info -o coverage",
+    "fork-start:local": "anvil",
+    "fork-deploy:local": "make -B deploy-fork",
+    "fork-test:local": "wait-on tcp:8545 && yarn fork-deploy:local && forge test -vv --mt 'testFork_checkDistribution'",
+    "fork-run:local": "npm-run-all -p -r fork-start:local fork-test:local",
     "prettier": "prettier --write --plugin=prettier-plugin-solidity 'script/**/*.sol' 'src/**/*.sol' 'test/**/*.sol'",
     "slither": "forge build --build-info --skip '*/test/**' --skip '*/script/**' --force && slither --compile-force-framework foundry --ignore-compile --config-file slither.config.json --fail-high .",
     "solhint": "solhint -f stylish 'src/**/*.sol'",
@@ -24,12 +28,14 @@
     "ethers": "^6.4.0",
     "hardhat": "^2.19.2",
     "hardhat-gas-reporter": "^1.0.9",
+    "npm-run-all": "4.1.5",
     "prettier": "^3.0.0",
     "prettier-plugin-solidity": "^1.2.0",
     "rand-seed": "^1.0.2",
     "solhint": "^3.4.1",
     "solidity-coverage": "^0.8.0",
-    "typechain": "^8.3.0"
+    "typechain": "^8.3.0",
+    "wait-on": "7.2.0"
   },
   "engines": {
     "node": ">=20"
