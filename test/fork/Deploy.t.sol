@@ -12,9 +12,6 @@ import { DeployBase } from "../../script/DeployBase.sol";
 contract ForkTests is TestUtils, DeployBase, InitialAccountsFixture {
     uint256 public localhostFork;
 
-    // DeployProduction script address
-    address public deployer = address(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266);
-
     mapping(address account => uint256 balance) private _expectedInitialPowerBalances;
     mapping(address account => uint256 balance) private _expectedInitialZeroBalances;
 
