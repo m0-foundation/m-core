@@ -17,26 +17,6 @@ contract DeployProduction is Script, DeployBase {
 
     address internal constant _WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2; // Mainnet WETH
 
-    bytes32 internal constant _BASE_MINTER_RATE = "base_minter_rate";
-    bytes32 internal constant _EARNER_RATE_MODEL = "earner_rate_model";
-    bytes32 internal constant _MAX_EARNER_RATE = "max_earner_rate";
-    bytes32 internal constant _MINT_DELAY = "mint_delay";
-    bytes32 internal constant _MINT_RATIO = "mint_ratio";
-    bytes32 internal constant _MINT_TTL = "mint_ttl";
-    bytes32 internal constant _MINTER_FREEZE_TIME = "minter_freeze_time";
-    bytes32 internal constant _MINTER_RATE_MODEL = "minter_rate_model";
-    bytes32 internal constant _PENALTY_RATE = "penalty_rate";
-    bytes32 internal constant _UPDATE_COLLATERAL_INTERVAL = "update_collateral_interval";
-    bytes32 internal constant _UPDATE_COLLATERAL_VALIDATOR_THRESHOLD = "update_collateral_threshold";
-
-    bytes32 internal constant _GUIDANCE = "guidance";
-    bytes32 internal constant _ECOSYSTEM_GUIDANCE = "ecosystem_guidance";
-    bytes32 internal constant _COLLATERAL_GUIDANCE = "collateral_guidance";
-    bytes32 internal constant _SPV_OPERATOR_GUIDANCE = "spv_operators_guidance";
-    bytes32 internal constant _VALIDATORS_GUIDANCE = "validators_guidance";
-    bytes32 internal constant _MINTERS_GUIDANCE = "minters_guidance";
-    bytes32 internal constant _MANDATORY_CONTRACT_GUIDANCE = "mandatory_contract_guidance";
-
     // NOTE: Populate these arrays with Power and Zero starting accounts respectively.
     address[][2] internal _initialAccounts = [
         [
@@ -416,54 +396,5 @@ contract DeployProduction is Script, DeployBase {
         vm.stopBroadcast();
 
         Logger.logContracts(registrar_, minterGateway_, minterRateModel_, earnerRateModel_);
-
-        address emergencyGovernor_ = IRegistrar(registrar_).emergencyGovernor();
-
-        vm.startBroadcast(deployer_);
-
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_MINT_RATIO, 9_000));
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_MINTER_FREEZE_TIME, 6 hours));
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_BASE_MINTER_RATE, 100));
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_MAX_EARNER_RATE, 500));
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_UPDATE_COLLATERAL_INTERVAL, 30 hours));
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_UPDATE_COLLATERAL_VALIDATOR_THRESHOLD, 1));
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_PENALTY_RATE, 10));
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_MINT_DELAY, 2 hours));
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_MINT_TTL, 2 hours));
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_MINTER_RATE_MODEL, minterRateModel_));
-        _propose(deployer_, emergencyGovernor_, _encodeSet(_EARNER_RATE_MODEL, earnerRateModel_));
-
-        // TODO: 7 proposals for guidance
-        // _propose(deployer_, emergencyGovernor_, _encodeSet(_GUIDANCE, 0x00));
-        // _propose(deployer_, emergencyGovernor_, _encodeSet(_ECOSYSTEM_GUIDANCE, 0x00));
-        // _propose(deployer_, emergencyGovernor_, _encodeSet(_COLLATERAL_GUIDANCE, 0x00));
-        // _propose(deployer_, emergencyGovernor_, _encodeSet(_SPV_OPERATOR_GUIDANCE, 0x00));
-        // _propose(deployer_, emergencyGovernor_, _encodeSet(_VALIDATORS_GUIDANCE, 0x00));
-        // _propose(deployer_, emergencyGovernor_, _encodeSet(_MINTERS_GUIDANCE, 0x00));
-        // _propose(deployer_, emergencyGovernor_, _encodeSet(_MANDATORY_CONTRACT_GUIDANCE, 0x00));
-
-        vm.stopBroadcast();
-    }
-
-    function _propose(
-        address proposer_,
-        address governor_,
-        bytes memory callData_
-    ) internal returns (uint256 proposalId_) {
-        address[] memory targets_ = new address[](1);
-        targets_[0] = governor_;
-
-        bytes[] memory callDatas_ = new bytes[](1);
-        callDatas_[0] = callData_;
-
-        proposalId_ = IGovernor(governor_).propose(targets_, new uint256[](1), callDatas_, "");
-    }
-
-    function _encodeSet(bytes32 key_, uint256 value_) internal pure returns (bytes memory) {
-        return abi.encodeWithSelector(IStandardGovernor.setKey.selector, key_, value_);
-    }
-
-    function _encodeSet(bytes32 key_, address value_) internal pure returns (bytes memory) {
-        return abi.encodeWithSelector(IStandardGovernor.setKey.selector, key_, value_);
     }
 }
