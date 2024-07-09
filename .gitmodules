@@ -8,3 +8,7 @@
 	path = lib/forge-std
 	url = git@github.com:foundry-rs/forge-std.git
 	branch = v1
+[submodule "lib/wrapped-m-token"]
+	path = lib/wrapped-m-token
+	url = git@github.com:m0-foundation/wrapped-m-token.git
+	branch = fix/start-stop-earning-fix
