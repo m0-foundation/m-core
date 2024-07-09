@@ -2,37 +2,37 @@
 
 pragma solidity 0.8.23;
 
-import { Test, console2 } from "../lib/forge-std/src/Test.sol";
+import { Test, console2 } from "../../lib/forge-std/src/Test.sol";
 
-import { IBatchGovernor } from "../lib/ttg/src/abstract/interfaces/IBatchGovernor.sol";
-import { IDistributionVault } from "../lib/ttg/src/interfaces/IDistributionVault.sol";
-import { IEarnerRateModel } from "../lib/protocol/src/rateModels/interfaces/IEarnerRateModel.sol";
-import { IEmergencyGovernor } from "../lib/ttg/src/interfaces/IEmergencyGovernor.sol";
-import { IEmergencyGovernorDeployer } from "../lib/ttg/src/interfaces/IEmergencyGovernorDeployer.sol";
-import { IERC20 } from "../lib/protocol/lib/common/src/interfaces/IERC20.sol";
-import { IERC5805 } from "../lib/ttg/src/abstract/interfaces/IERC5805.sol";
-import { IGovernor } from "../lib/ttg/src/abstract/interfaces/IGovernor.sol";
-import { IMinterGateway } from "../lib/protocol/src/interfaces/IMinterGateway.sol";
-import { IMinterRateModel } from "../lib/protocol/src/rateModels/interfaces/IMinterRateModel.sol";
-import { IMToken } from "../lib/protocol/src/interfaces/IMToken.sol";
-import { IPowerToken } from "../lib/ttg/src/interfaces/IPowerToken.sol";
-import { IPowerTokenDeployer } from "../lib/ttg/src/interfaces/IPowerTokenDeployer.sol";
-import { IRegistrar } from "../lib/ttg/src/interfaces/IRegistrar.sol";
-import { IStandardGovernor } from "../lib/ttg/src/interfaces/IStandardGovernor.sol";
-import { IStandardGovernorDeployer } from "../lib/ttg/src/interfaces/IStandardGovernorDeployer.sol";
-import { IZeroGovernor } from "../lib/ttg/src/interfaces/IZeroGovernor.sol";
-import { IZeroToken } from "../lib/ttg/src/interfaces/IZeroToken.sol";
+import { IBatchGovernor } from "../../lib/ttg/src/abstract/interfaces/IBatchGovernor.sol";
+import { IDistributionVault } from "../../lib/ttg/src/interfaces/IDistributionVault.sol";
+import { IEarnerRateModel } from "../../lib/protocol/src/rateModels/interfaces/IEarnerRateModel.sol";
+import { IEmergencyGovernor } from "../../lib/ttg/src/interfaces/IEmergencyGovernor.sol";
+import { IEmergencyGovernorDeployer } from "../../lib/ttg/src/interfaces/IEmergencyGovernorDeployer.sol";
+import { IERC20 } from "../../lib/protocol/lib/common/src/interfaces/IERC20.sol";
+import { IERC5805 } from "../../lib/ttg/src/abstract/interfaces/IERC5805.sol";
+import { IGovernor } from "../../lib/ttg/src/abstract/interfaces/IGovernor.sol";
+import { IMinterGateway } from "../../lib/protocol/src/interfaces/IMinterGateway.sol";
+import { IMinterRateModel } from "../../lib/protocol/src/rateModels/interfaces/IMinterRateModel.sol";
+import { IMToken } from "../../lib/protocol/src/interfaces/IMToken.sol";
+import { IPowerToken } from "../../lib/ttg/src/interfaces/IPowerToken.sol";
+import { IPowerTokenDeployer } from "../../lib/ttg/src/interfaces/IPowerTokenDeployer.sol";
+import { IRegistrar } from "../../lib/ttg/src/interfaces/IRegistrar.sol";
+import { IStandardGovernor } from "../../lib/ttg/src/interfaces/IStandardGovernor.sol";
+import { IStandardGovernorDeployer } from "../../lib/ttg/src/interfaces/IStandardGovernorDeployer.sol";
+import { IZeroGovernor } from "../../lib/ttg/src/interfaces/IZeroGovernor.sol";
+import { IZeroToken } from "../../lib/ttg/src/interfaces/IZeroToken.sol";
 
-import { PureEpochs } from "../lib/ttg/src/libs/PureEpochs.sol";
+import { PureEpochs } from "../../lib/ttg/src/libs/PureEpochs.sol";
 
-import { InitialAccountsFixture } from "./fixture/InitialAccountsFixture.sol";
+import { InitialAccountsFixture } from "../fixture/InitialAccountsFixture.sol";
 
-import { IWETH } from "./utils/IWETH.sol";
-import { TestUtils } from "./utils/TestUtils.sol";
+import { IWETH } from "../utils/IWETH.sol";
+import { TestUtils } from "../utils/TestUtils.sol";
 
-import { DeployBase } from "../script/DeployBase.sol";
+import { DeployBase } from "../../script/DeployBase.sol";
 
-contract IntegrationTests is TestUtils, DeployBase, InitialAccountsFixture {
+contract ProtocolIntegrationTests is TestUtils, DeployBase, InitialAccountsFixture {
     address internal constant _DEPLOYER = 0xF2f1ACbe0BA726fEE8d75f3E32900526874740BB;
 
     uint256 internal constant _DEPLOYER_NONCE = 0;
