@@ -1,5 +1,7 @@
 # M^0 Core
 
+Integration tests and scripts for M^0 protocol and periphery.
+
 ## Deploy
 
 ### Staging deploy
