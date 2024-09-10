@@ -17,10 +17,10 @@ contract CreateProposals is Script, DeployBase {
 
     // Proposal descriptions
     string internal constant _EARNER1_CLAIMANT_DESC =
-        "# Set Mint Ratio to 97% [9,700 bps]\n\nThis proposal sets the Mint Ratio to 97%. This means that Minters will be able to generate up to 97% of the value of their eligible collateral as M.";
+        "# Add Re7 as Claimant for wM Euler Vault\n\nAdd Re7 address (same as proposed address in https://governance.m0.org/proposal/25468343607905187645545454273850636510495287517525261586690051378605098469729) as an override claimant to claim the yield attributable to its wM Euler vault from the Wrapped M Contract.";
 
     string internal constant _EARNER2_CLAIMANT_DESC =
-        "# Set Minter Rate to 4.8% [480 bps]\n\nThis proposal sets the Minter Rate to 4.8%. This means that Minters will pay an annualized 4.8% on any Owed M (i.e. M that they have generated).";
+        "# Add Usual as Claimant for USD0/wM Curve Pool\n\nAdd Usual address (same as proposed address in https://governance.m0.org/proposal/6339350101405699412165291383945743514713084471036329373255559565513097222237) as an override claimant to claim the yield attributable to its USD0/wM pool from the Wrapped M Contract.";
 
     function run() external {
         address deployer_ = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
@@ -31,14 +31,14 @@ contract CreateProposals is Script, DeployBase {
 
         vm.startBroadcast(deployer_);
 
-        address earner1_ = 0xdd82875f0840AAD58a455A70B88eEd9F59ceC7c7; // Usual protocol
-        address earner2_ = 0xdd82875f0840AAD58a455A70B88eEd9F59ceC7c7; // Replace me
+        address earner1_ = 0xea0C048c728578b1510EBDF9b692E8936D6Fbc90; // wM Euler Vault
+        address earner2_ = 0xCF3166181848eEC4Fd3b9046aE7CB582F34d2e6c; // USD0/M Curve pool
 
         bytes32 earnerKey1_ = keccak256(abi.encode(_CLAIM_OVERRIDE_RECIPIENT_PREFIX, earner1_));
         bytes32 earnerKey2_ = keccak256(abi.encode(_CLAIM_OVERRIDE_RECIPIENT_PREFIX, earner2_));
 
-        address claimant1_ = 0xdd82875f0840AAD58a455A70B88eEd9F59ceC7c7; // Replace me
-        address claimant2_ = 0xdd82875f0840AAD58a455A70B88eEd9F59ceC7c7; // Replace me
+        address claimant1_ = 0x184d597Be309e11650ca6c935B483DcC05551578; // Re7 Earner address
+        address claimant2_ = 0xdd82875f0840AAD58a455A70B88eEd9F59ceC7c7; // Usual Earner address
 
         // Wrapped M override recipients - 2 proposals
         uint256 claimant1ProposalId_ = _propose(
