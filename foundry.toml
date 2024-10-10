@@ -15,9 +15,6 @@ optimizer = true
 optimizer_runs = 999999
 verbosity = 3
 ignored_error_codes = []
-block_number = 19_818_700
-block_timestamp = 1_715_091_047
-fork_block_number = 19_818_700
 rpc_storage_caching = { chains = ["mainnet"], endpoints = "all" }
 build_info = true
 sizes = true
