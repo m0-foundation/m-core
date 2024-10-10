@@ -20,7 +20,7 @@ contract CreateProposals is Script, DeployBase {
         "# Add M^0 Foundation as Yield Claimant for wM in the UniV3 wM/USDC Pool\n\nThis will send the yield earned on wM in the UniV3 wM/USDC Pool to the M^0 Foundation until a more sophisticated yield distribution mechanism can be put in place.";
 
     string internal constant _EARNER2_CLAIMANT_DESC =
-        "# Add Usual as Claimant for Morpho Blue\n\nAdd Usual as claimant for Morpho Blue contract(0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb). See more details here https://governance.m0.org/proposal/69189574147850718380572151444818943505159503261517402970976070874593534300442";
+        "# Add Usual as Yield Claimant for Morpho Blue singleton contract\n\nAdd Usual as claimant for Morpho Blue contract(0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb). Incentivize first lending market utilizing Morpho Blue with the goal of enabling cheap and efficient borrowing and looping strategies. See more details https://governance.m0.org/proposal/69189574147850718380572151444818943505159503261517402970976070874593534300442";
 
     function run() external {
         address deployer_ = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
