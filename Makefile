@@ -27,8 +27,11 @@ deploy-production:
 sync-production:
 	forge script script/SyncAccounts.s.sol --skip src --skip test --rpc-url $(MAINNET_RPC_URL) --broadcast --slow --verify -vvv
 
+start-local:
+	anvil --mnemonic ${MNEMONIC}
+
 deploy-local:
-	./set-epochs.sh -p dev && forge script script/DeployDev.s.sol --skip src --skip test --rpc-url $(LOCALHOST_RPC_URL) --broadcast --slow -vvv
+	./set-epochs.sh -p dev && forge script script/DeployLocal.s.sol --skip src --skip test --rpc-url $(LOCALHOST_RPC_URL) --broadcast --slow -vvv
 
 deploy-fork:
 	./set-epochs.sh -p production && FOUNDRY_PROFILE=fork forge script script/DeployProduction.s.sol --skip src --skip test --rpc-url $(LOCALHOST_RPC_URL) --broadcast --slow -vvv
