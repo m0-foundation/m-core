@@ -16,7 +16,9 @@ contract CreateProposals is Script, DeployBase {
 
     // Proposal descriptions
     string internal constant _WM_SOLANA_VAULT_DESC =
-        "# Add the Wrapped M (wM) Solana M Vault PDA (base58: 8vtsGdu4ErjK2skhV7FfPQwXdae6myWjgWJ8gRMnXi2K, hex: 0x75d03cbc601c7143e02620783c2d31eee8c51897f080da17be44aeb6e3298490) to the 'solana-earners' list in preparation for the deployment of M and wM on Solana. This PDA will be the signer on the wM Earn Program and will custody M that has been wrapped.\n\nSince Solana addresses are longer (32 bytes) than EVM addresses (20 bytes), we must use the more generic `setKey(bytes32 key, bytes32 value)` function on the Registrar. The key is calculated as `keccak256(abi.encodePacked(bytes32('solana-earners'),bytes32(0x75d03cbc601c7143e02620783c2d31eee8c51897f080da17be44aeb6e3298490))). The value is just a boolean flag, so we set it to 1 (meaning the address is a member of the list).";
+        "# Add Solana wM to the Solana M Earners List\n\n"
+        "This proposal adds the Wrapped M (wM) Solana M Vault PDA (base58: 8vtsGdu4ErjK2skhV7FfPQwXdae6myWjgWJ8gRMnXi2K, hex: 0x75d03cbc601c7143e02620783c2d31eee8c51897f080da17be44aeb6e3298490) to the 'solana-earners' list in preparation for the deployment of M and wM on Solana. This PDA will be the signer on the wM Earn Program and will custody M that has been wrapped.\n\n"
+        "Since Solana addresses are longer (32 bytes) than EVM addresses (20 bytes), we must use the more generic `setKey(bytes32 key, bytes32 value)` function on the Registrar. The key is calculated as `keccak256(abi.encodePacked(bytes32('solana-earners'),bytes32(0x75d03cbc601c7143e02620783c2d31eee8c51897f080da17be44aeb6e3298490))). The value is just a boolean flag, so we set it to 1 (meaning the address is a member of the list).";
 
     function run() external {
         address deployer_ = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
@@ -33,7 +35,6 @@ contract CreateProposals is Script, DeployBase {
 
         // Wrapped M Solana Vault - 1 proposal
         uint256 wMSolanaVaultProposalId_ = _propose(
-            deployer_,
             standardGovernor_,
             _encodeSet(registrarKey, uint256(1)),
             _WM_SOLANA_VAULT_DESC
@@ -45,7 +46,6 @@ contract CreateProposals is Script, DeployBase {
     }
 
     function _propose(
-        address proposer_,
         address governor_,
         bytes memory callData_,
         string memory description_
@@ -61,13 +61,5 @@ contract CreateProposals is Script, DeployBase {
 
     function _encodeSet(bytes32 key_, uint256 value_) internal pure returns (bytes memory) {
         return abi.encodeWithSelector(IStandardGovernor.setKey.selector, key_, value_);
-    }
-
-    function _encodeSet(bytes32 key_, address value_) internal pure returns (bytes memory) {
-        return abi.encodeWithSelector(IStandardGovernor.setKey.selector, key_, value_);
-    }
-
-    function _addToList(bytes32 listName_, address actor_) internal pure returns (bytes memory) {
-        return abi.encodeWithSelector(IStandardGovernor.addToList.selector, listName_, actor_);
     }
 }
