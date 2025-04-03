@@ -16,9 +16,17 @@ contract CreateProposals is Script, DeployBase {
 
     // Proposal descriptions
     string internal constant _WM_SOLANA_VAULT_DESC =
-        "# Add Solana wM to the Solana M Earners List\n\n"
-        "This proposal adds the Wrapped M (wM) Solana M Vault PDA (base58: 8vtsGdu4ErjK2skhV7FfPQwXdae6myWjgWJ8gRMnXi2K, hex: 0x75d03cbc601c7143e02620783c2d31eee8c51897f080da17be44aeb6e3298490) to the 'solana-earners' list in preparation for the deployment of M and wM on Solana. This PDA will be the signer on the wM Earn Program and will custody M that has been wrapped.\n\n"
-        "Since Solana addresses are longer (32 bytes) than EVM addresses (20 bytes), we must use the more generic `setKey(bytes32 key, bytes32 value)` function on the Registrar. The key is calculated as `keccak256(abi.encodePacked(bytes32('solana-earners'),bytes32(0x75d03cbc601c7143e02620783c2d31eee8c51897f080da17be44aeb6e3298490))). The value is just a boolean flag, so we set it to 1 (meaning the address is a member of the list).";
+        "# Add Solana $M (Wrapped) to the Solana Earners List\n\n"
+        "This proposal adds the $M (Wrapped) (symbol = wM) Solana Vault to the 'solana-earners' list, in preparation for the deployment of $M and $M (Wrapped) on Solana.\n\n"
+        "Solana differs from Ethereum in that individual user balances are not stored on the Token 'Mint', but in individual Token Accounts. The owner of a Token Account controls the balance and must sign any transaction that moves those tokens. For a Program to sign transactions and control tokens, it must use a Program Derived Account (PDA), which is a sub-address of the Program derived from the hash of the Program address and a seed value. As a result PDA values are deterministic from the Program address (aka ID or PubKey) and the seed. For our purposes, the wM token's M Extension Program custodies M tokens in a Token Account owned by its M Vault PDA. For the M held in the Program under this PDA to earn yield, it must be added as an Earner.\n\n"
+        "Similar to Ethereum M earners, Solana M earners must be added to a list on the TTGRegistrar contract by Governance. This list is compiled into a Merkle tree by the new MerkleTreeBuilder contract. The root of this Merkle tree is sent to Solana via the M Portal Bridge.  Since Solana addresses are longer (32 bytes) than EVM addresses (20 bytes), we must use the more generic `setKey(bytes32 key, bytes32 value)` function on the TTGRegistrar. The key is calculated as `keccak256(abi.encodePacked(bytes32('solana-earners'),bytes32(0x75d03cbc601c7143e02620783c2d31eee8c51897f080da17be44aeb6e3298490))). The value is just a boolean flag, so we set it to 1 (meaning the address is a member of the list).\n\n"
+        "The wM addresses for the Solana deployment are as follows:\n"
+        "| Account Name              | Address (base58)                             | Address (hex)                                                      |"
+        "|---------------------------|----------------------------------------------|--------------------------------------------------------------------|"
+        "| wM Mint                   | mzeroXDoBpRVhnEXBra27qzAMdxgpWVY3DzQW7xMVJp  | 0x0b86be66bc1f98b47d20a3be615a4905a825b826864e2a0f4c948467d33ee709 |"
+        "| wM ExtEarn Program        | wMXX1K1nca5W4pZr1piETe78gcAVVrEFi9f4g46uXko  | 0x0dec929c1657125a082002795a20598f05b5b765ba2db60dec8a6305428fd3b4 |"
+        "| wM ExtEarn M Vault        | 8vtsGdu4ErjK2skhV7FfPQwXdae6myWjgWJ8gRMnXi2K | 0x75d03cbc601c7143e02620783c2d31eee8c51897f080da17be44aeb6e3298490 |"
+        "| wM ExtEarn Mint Authority | Anfx7wng5TEe5UrkFKTirtADBawmtRs9KoD15BUbEmvT | 0x916c5c2b4c583c98318d512aadba6c4bd21b8731959b032fe890ee640af40ed4 |";
 
     function run() external {
         address deployer_ = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
@@ -41,8 +49,6 @@ contract CreateProposals is Script, DeployBase {
         );
 
         vm.stopBroadcast();
-
-        console2.log("Wrapped M Solana Vault:", wMSolanaVaultProposalId_);
     }
 
     function _propose(
