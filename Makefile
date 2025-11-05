@@ -41,7 +41,7 @@ deploy-dev-timelock:
 	@echo "Proposers: ${TIMELOCK_PROPOSERS}"
 	@echo "Executors: ${TIMELOCK_EXECUTORS}"
 	@echo "Admin: ${TIMELOCK_ADMIN}"
-	@forge script script/deploy/DeployTimelock.sol:DeployTimelock \
+	@forge script script/DeployTimelock.s.sol:DeployTimelock \
 		${TIMELOCK_MIN_DELAY} \
 		"[${TIMELOCK_PROPOSERS}]" \
 		"[${TIMELOCK_EXECUTORS}]" \
@@ -61,12 +61,12 @@ deploy-timelock:
 	@echo "Proposers: ${TIMELOCK_PROPOSERS}"
 	@echo "Executors: ${TIMELOCK_EXECUTORS}"
 	@echo "Admin: ${TIMELOCK_ADMIN}"
-	@forge script script/deploy/DeployTimelock.sol:DeployTimelock \
+	@forge script script/DeployTimelock.s.sol:DeployTimelock \
 		${TIMELOCK_MIN_DELAY} \
 		"[${TIMELOCK_PROPOSERS}]" \
 		"[${TIMELOCK_EXECUTORS}]" \
 		${TIMELOCK_ADMIN} \
-		--rpc-url ${ETH_RPC_URL} \
+		--rpc-url ${MAINNET_RPC_URL} \
 		--private-key ${PRIVATE_KEY} \
 		--broadcast \
 		--verify \
