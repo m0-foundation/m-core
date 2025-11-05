@@ -72,7 +72,7 @@ deploy-timelock:
 		--verify \
 		--etherscan-api-key ${ETHERSCAN_API_KEY} \
 		-vvv
-`
+
 # Run slither
 slither:
 	./set-epochs.sh -p production && FOUNDRY_PROFILE=production forge build --build-info --skip '*/test/**' --skip '*/script/**' --force && slither --compile-force-framework foundry --ignore-compile --sarif results.sarif --config-file slither.config.json .
