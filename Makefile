@@ -33,6 +33,46 @@ deploy-local:
 deploy-fork:
 	./set-epochs.sh -p production && FOUNDRY_PROFILE=fork forge script script/DeployProduction.s.sol --skip src --skip test --rpc-url $(LOCALHOST_RPC_URL) --broadcast --slow -vvv
 
+# Deployment targets
+deploy-dev-timelock:
+	@echo "=== Deploying TimelockController ==="
+	@echo "Network: ${SEPOLIA_RPC_URL}"
+	@echo "Min Delay: ${TIMELOCK_MIN_DELAY}"
+	@echo "Proposers: ${TIMELOCK_PROPOSERS}"
+	@echo "Executors: ${TIMELOCK_EXECUTORS}"
+	@echo "Admin: ${TIMELOCK_ADMIN}"
+	@forge script script/deploy/DeployTimelock.sol:DeployTimelock \
+		${TIMELOCK_MIN_DELAY} \
+		"[${TIMELOCK_PROPOSERS}]" \
+		"[${TIMELOCK_EXECUTORS}]" \
+		${TIMELOCK_ADMIN} \
+		--rpc-url ${SEPOLIA_RPC_URL} \
+		--private-key ${PRIVATE_KEY} \
+		--broadcast \
+		--verify \
+		--etherscan-api-key ${ETHERSCAN_API_KEY} \
+		-vvv
+
+# Deployment targets
+deploy-timelock:
+	@echo "=== Deploying TimelockController ==="
+	@echo "Network: ${MAINNET_RPC_URL}"
+	@echo "Min Delay: ${TIMELOCK_MIN_DELAY}"
+	@echo "Proposers: ${TIMELOCK_PROPOSERS}"
+	@echo "Executors: ${TIMELOCK_EXECUTORS}"
+	@echo "Admin: ${TIMELOCK_ADMIN}"
+	@forge script script/deploy/DeployTimelock.sol:DeployTimelock \
+		${TIMELOCK_MIN_DELAY} \
+		"[${TIMELOCK_PROPOSERS}]" \
+		"[${TIMELOCK_EXECUTORS}]" \
+		${TIMELOCK_ADMIN} \
+		--rpc-url ${ETH_RPC_URL} \
+		--private-key ${PRIVATE_KEY} \
+		--broadcast \
+		--verify \
+		--etherscan-api-key ${ETHERSCAN_API_KEY} \
+		-vvv
+`
 # Run slither
 slither:
 	./set-epochs.sh -p production && FOUNDRY_PROFILE=production forge build --build-info --skip '*/test/**' --skip '*/script/**' --force && slither --compile-force-framework foundry --ignore-compile --sarif results.sarif --config-file slither.config.json .
