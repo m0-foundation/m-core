@@ -80,6 +80,13 @@ deploy-m-token-faucet-sepolia:
 		--etherscan-api-key ${ETHERSCAN_API_KEY} \
 		-vvv --broadcast --verify
 
+upgrade-m-token-faucet-sepolia:
+	forge script script/UpgradeMTokenFaucet.s.sol:UpgradeMTokenFaucet \
+		--rpc-url ${SEPOLIA_RPC_URL} \
+		--private-key ${PRIVATE_KEY} \
+		--etherscan-api-key ${ETHERSCAN_API_KEY} \
+		-vvv --broadcast --verify
+
 # Run slither
 slither:
 	./set-epochs.sh -p production && FOUNDRY_PROFILE=production forge build --build-info --skip '*/test/**' --skip '*/script/**' --force && slither --compile-force-framework foundry --ignore-compile --sarif results.sarif --config-file slither.config.json .

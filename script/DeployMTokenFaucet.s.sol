@@ -15,15 +15,11 @@ contract DeployMTokenFaucet is Script {
         address deployer = vm.rememberKey(vm.envUint("PRIVATE_KEY"));
 
         console.log("Deployer:    ", deployer);
-        
+
         vm.startBroadcast(deployer);
 
         MTokenFaucet implementation = new MTokenFaucet(M_TOKEN);
-        TransparentUpgradeableProxy proxy = new TransparentUpgradeableProxy(
-            address(implementation),
-            deployer,
-            abi.encodeWithSelector(MTokenFaucet.initialize.selector, deployer)
-        );  
+        TransparentUpgradeableProxy proxy = new TransparentUpgradeableProxy(address(implementation), deployer, "");  
         
         vm.stopBroadcast();
 

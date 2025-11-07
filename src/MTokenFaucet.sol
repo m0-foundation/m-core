@@ -3,11 +3,10 @@
 pragma solidity ^0.8.23;
 
 import { IERC20 } from "../lib/common/src/interfaces/IERC20.sol";
-import { OwnableUpgradeable } from "../lib/common/lib/openzeppelin-contracts-upgradeable/contracts/access/OwnableUpgradeable.sol";
 
 /// @title MTokenFaucet
 /// @notice A faucet contract for distributing $M tokens on Testnet.
-contract MTokenFaucet is OwnableUpgradeable {
+contract MTokenFaucet {
     uint256 public constant AMOUNT = 100e6; // 100 $M
     
     address public immutable mToken;
@@ -22,14 +21,8 @@ contract MTokenFaucet is OwnableUpgradeable {
     error InsufficientFaucetBalance();
 
     constructor(address mToken_) {
-        _disableInitializers();
-
         if (mToken_ == address(0)) revert ZeroMToken();
         mToken = mToken_;
-    }
-
-    function initialize(address initialOwner) external initializer {
-        __Ownable_init(initialOwner);
     }
 
     /// @notice Requests $M tokens from the faucet.
