@@ -73,12 +73,17 @@ deploy-timelock:
 		--etherscan-api-key ${ETHERSCAN_API_KEY} \
 		-vvv
 
-deploy-m-token-faucet-sepolia:
-	forge script script/DeployMTokenFaucet.s.sol:DeployMTokenFaucet \
-		--rpc-url ${SEPOLIA_RPC_URL} \
-		--private-key ${PRIVATE_KEY} \
+deploy-m-token-faucet:
+	PRIVATE_KEY=$(PRIVATE_KEY) forge script script/DeployMTokenFaucet.s.sol:DeployMTokenFaucet \
+		--rpc-url ${RPC_URL} \
 		--etherscan-api-key ${ETHERSCAN_API_KEY} \
-		-vvv --broadcast --verify
+		-vvv --skip test --broadcast --slow --verify
+
+deploy-m-token-faucet-sepolia: RPC_URL=$(SEPOLIA_RPC_URL)
+deploy-m-token-faucet-sepolia: deploy-m-token-faucet
+
+deploy-m-token-faucet-arbitrum-sepolia: RPC_URL=$(ARBITRUM_SEPOLIA_RPC_URL)
+deploy-m-token-faucet-arbitrum-sepolia: deploy-m-token-faucet
 
 upgrade-m-token-faucet-sepolia:
 	forge script script/UpgradeMTokenFaucet.s.sol:UpgradeMTokenFaucet \
