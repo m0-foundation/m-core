@@ -93,11 +93,11 @@ contract CreateProposals is Script, DeployBase {
         _WETH.approve(standardGovernor_, uint256(1e18));
 
         // Extension programs to add - 5 proposals
-        bytes32 iotaVaultAddr = bytes32(0x0000000000000000000000000000000000000000000000000000000000000001);
-        bytes32 kappaVaultAddr = bytes32(0x0000000000000000000000000000000000000000000000000000000000000002);
-        bytes32 lambdaVaultAddr = bytes32(0x0000000000000000000000000000000000000000000000000000000000000003);
-        bytes32 muVaultAddr = bytes32(0x0000000000000000000000000000000000000000000000000000000000000004);
-        bytes32 nuVaultAddr = bytes32(0x0000000000000000000000000000000000000000000000000000000000000005);
+        bytes32 iotaVaultAddr = bytes32(0xb68a840b20c6caa5a500badb6fcd2ae685ad8eb3d9d3b582f3c862bc8d9fdd3d);
+        bytes32 kappaVaultAddr = bytes32(0x6b1d6b28ed369b2a340e2017502e990662c27eebfcdeee5c2886a52a11068faf);
+        bytes32 lambdaVaultAddr = bytes32(0x822d3f569202428de7f07d515c5ecb3b51aef5f27166ffd1d3270c35d1bcc0ff);
+        bytes32 muVaultAddr = bytes32(0x9ef00413a80177d9aca0487742c8e94e7d80d6113d805bab104e95b1c3ff3bb2);
+        bytes32 nuVaultAddr = bytes32(0xc7378b1f22dc884ce61bfca8368a1936bec6360a3230f23cf0dc2a24bbada1b8);
 
         bytes32 iotaRegistrarKey = keccak256(abi.encodePacked(_SOLANA_EARNERS_PREFIX, iotaVaultAddr));
         bytes32 kappaRegistrarKey = keccak256(abi.encodePacked(_SOLANA_EARNERS_PREFIX, kappaVaultAddr));
