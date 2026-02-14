@@ -73,6 +73,25 @@ deploy-timelock:
 		--etherscan-api-key ${ETHERSCAN_API_KEY} \
 		-vvv
 
+deploy-m-token-faucet:
+	PRIVATE_KEY=$(PRIVATE_KEY) forge script script/DeployMTokenFaucet.s.sol:DeployMTokenFaucet \
+		--rpc-url ${RPC_URL} \
+		--etherscan-api-key ${ETHERSCAN_API_KEY} \
+		-vvv --skip test --broadcast --slow --verify
+
+deploy-m-token-faucet-sepolia: RPC_URL=$(SEPOLIA_RPC_URL)
+deploy-m-token-faucet-sepolia: deploy-m-token-faucet
+
+deploy-m-token-faucet-arbitrum-sepolia: RPC_URL=$(ARBITRUM_SEPOLIA_RPC_URL)
+deploy-m-token-faucet-arbitrum-sepolia: deploy-m-token-faucet
+
+upgrade-m-token-faucet-sepolia:
+	forge script script/UpgradeMTokenFaucet.s.sol:UpgradeMTokenFaucet \
+		--rpc-url ${SEPOLIA_RPC_URL} \
+		--private-key ${PRIVATE_KEY} \
+		--etherscan-api-key ${ETHERSCAN_API_KEY} \
+		-vvv --broadcast --verify
+
 # Run slither
 slither:
 	./set-epochs.sh -p production && FOUNDRY_PROFILE=production forge build --build-info --skip '*/test/**' --skip '*/script/**' --force && slither --compile-force-framework foundry --ignore-compile --sarif results.sarif --config-file slither.config.json .
